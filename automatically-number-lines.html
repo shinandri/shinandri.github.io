@@ -9,6 +9,12 @@
       align-items: center;
       gap: 20px; /* Adjust the gap as needed */
     }
+
+    @media (max-width: 768px) { /* Adjust the breakpoint as needed */
+      .hide-on-mobile {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -18,8 +24,9 @@
       <label for="numberBox">First number:</label>
       <input type="number" id="numberBox" min="0" value="1">
     </div>
-    <button onclick="removeEmptyLines()">Number the lines</button>
+    <button class="hide-on-mobile" onclick="removeEmptyLines()">Number the lines</button>
     <textarea id="resultTextBox" rows="5" cols="50" readonly></textarea>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
   </div>
 
   <script>
@@ -49,6 +56,12 @@
       const numberedLinesWithNewlines = numberedLines.join("\n\n");
 
       resultTextBox.value = numberedLinesWithNewlines;
+    }
+
+    function copyToClipboard() {
+      const resultTextBox = document.getElementById("resultTextBox");
+      resultTextBox.select();
+      document.execCommand("copy");
     }
   </script>
 </body>
