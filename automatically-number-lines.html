@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Automatically Number Lines</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px; /* Adjust the gap as needed */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <textarea id="editableTextBox" rows="5" cols="50" onfocus="clearPlaceholder()">Enter your text here.</textarea>
+    <div>
+      <label for="numberBox">Starting number:</label>
+      <input type="number" id="numberBox" min="0" value="1">
+    </div>
+    <button onclick="removeEmptyLines()">Number the lines</button>
+    <textarea id="resultTextBox" rows="5" cols="50" readonly></textarea>
+  </div>
+
+  <script>
+    function clearPlaceholder() {
+      const editableTextBox = document.getElementById("editableTextBox");
+      if (editableTextBox.value === "Enter your text here.") {
+        editableTextBox.value = "";
+      }
+    }
+
+    function removeEmptyLines() {
+      const editableTextBox = document.getElementById("editableTextBox");
+      const resultTextBox = document.getElementById("resultTextBox");
+      const numberBox = document.getElementById("numberBox");
+
+      const lines = editableTextBox.value.split("\n");
+      const filteredLines = lines.filter(line => line.trim() !== "");
+      const resultText = filteredLines.join("\n");
+
+      // Get the value from the number box
+      const startingNumber = parseInt(numberBox.value);
+
+      // Filter the lines based on the number of lines and number them starting from the specified number
+      const numberedLines = filteredLines.map((line, index) => (startingNumber + index) + ". " + line);
+
+      // Add a newline after each line
+      const numberedLinesWithNewlines = numberedLines.join("\n\n");
+
+      resultTextBox.value = numberedLinesWithNewlines;
+    }
+  </script>
+</body>
+</html>
